@@ -8,7 +8,7 @@ def createServer():
         serversocket.bind(('localhost',8000))
         serversocket.listen(5)
         while(1):
-            # Устанавливаем соединение с клиентом
+            # РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРѕРµРґРёРЅРµРЅРёРµ СЃ РєР»РёРµРЅС‚РѕРј
             (clientsocket, address) = serversocket.accept()
             rd = clientsocket.recv(5000).decode()
             pieces = rd.split("\n")
@@ -17,10 +17,10 @@ def createServer():
                 remote_data = pieces[0]+"\r\n"
                 print(remote_data)
                 print(1)
-                # Пробрасываем сокет на удаленный сервер
+                # РџСЂРѕР±СЂР°СЃС‹РІР°РµРј СЃРѕРєРµС‚ РЅР° СѓРґР°Р»РµРЅРЅС‹Р№ СЃРµСЂРІРµСЂ
                 forwarder_socket.connect(("data.pr4e.org", 80))
                 forwarder_socket.send(remote_data.encode())
-                # Считываем ответ
+                # РЎС‡РёС‚С‹РІР°РµРј РѕС‚РІРµС‚
                 data = ""
                 while True:
                     data_from_server = forwarder_socket.recv(512)
@@ -29,7 +29,7 @@ def createServer():
                         break
                     print(data_from_server.decode(), end="")
                 forwarder_socket.shutdown(SHUT_WR)
-                # Отправляем ответ удаленного сервера клиенту
+                # РћС‚РїСЂР°РІР»СЏРµРј РѕС‚РІРµС‚ СѓРґР°Р»РµРЅРЅРѕРіРѕ СЃРµСЂРІРµСЂР° РєР»РёРµРЅС‚Сѓ
             if data:
                 clientsocket.sendall(data.encode())
             else:
